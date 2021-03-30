@@ -1,0 +1,2669 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package forms;
+
+import AppPackage.AnimationClass;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import net.proteanit.sql.DbUtils;
+
+/**
+ *
+ * @author Kariuki
+ */
+public class switchboard extends javax.swing.JFrame {
+
+    AnimationClass ac = new AnimationClass();
+    String moviestatus;
+    String seriesstatus;
+    String animationstatus;
+    private CardLayout cardlayout;
+
+    /**
+     * Creates new form switchboard
+     */
+    public switchboard() {
+        initComponents();
+        slideshow();
+        dynamictime();
+        jProgressBar1.setValue(89);
+        jProgressBar2.setValue(60);
+        jProgressBar3.setValue(67);
+        jProgressBar4.setValue(20);
+        fetchmovie();
+        fetchseries();
+        fetchanimation();
+    }
+
+    public void slideshow() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int count=0;
+                try {
+                    while (true) {
+                        switch (count) {
+                            case 0:
+                                Thread.sleep(3000);
+                                ac.jLabelXLeft(0, -540, 40, 10, img1);
+                                ac.jLabelXLeft(540, 0, 40, 10, img2);
+                                ac.jLabelXLeft(1080, 540, 40, 10, img3);
+                                count=1;
+                            case 1:
+                                Thread.sleep(3000);
+                                ac.jLabelXLeft(-540, -1080, 40, 10, img1);
+                                ac.jLabelXLeft(0, -540, 40, 10, img2);
+                                ac.jLabelXLeft(540, 0, 40, 10, img3);
+                                count=2;
+                            case 2:
+                                Thread.sleep(3000);
+                                ac.jLabelXRight(-1080, -540, 40, 10, img1);
+                                ac.jLabelXRight(-540, 0, 40, 10, img2);
+                                ac.jLabelXRight(0, 500, 40, 10, img3);
+                                count=3;
+                            case 3:
+                                Thread.sleep(3000);
+                                ac.jLabelXRight(-540, 0, 40, 10, img1);
+                                ac.jLabelXRight(0, 540, 40, 10, img2);
+                                ac.jLabelXRight(540, 1080, 40, 10, img3);
+                                count=0;
+
+                        }
+                    }
+                } catch (Exception err) {
+                    JOptionPane.showMessageDialog(null, err);
+                }
+            }
+        }) {
+        }.start();
+    }
+
+
+    public void dynamictime() {
+        Thread clock = new Thread() {
+            public void run() {
+                for (;;) {
+                    Calendar cal = new GregorianCalendar();
+                    int year = cal.get(Calendar.YEAR);
+                    int month = cal.get(Calendar.MONTH);
+                    int day = cal.get(Calendar.DAY_OF_MONTH);
+                    datelabel.setText(day + "/" + (month + 1) + "/" + year);
+                    datelabel1.setText(day + "/" + (month + 1) + "/" + year);
+                    datelabel2.setText(day + "/" + (month + 1) + "/" + year);
+                    datelabel3.setText(day + "/" + (month + 1) + "/" + year);
+                    int second = cal.get(Calendar.SECOND);
+                    int minute = cal.get(Calendar.MINUTE);
+                    int hour = cal.get(Calendar.HOUR_OF_DAY);
+                    timelabel.setText(hour + ":" + minute + ":" + second);
+                    timelabel1.setText(hour + ":" + minute + ":" + second);
+                    timelabel2.setText(hour + ":" + minute + ":" + second);
+                    timelabel3.setText(hour + ":" + minute + ":" + second);
+                    try {
+                        sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(switchboard.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        };
+        clock.start();
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        sidemenu = new javax.swing.JPanel();
+        btnanimation = new javax.swing.JPanel();
+        indi4 = new javax.swing.JPanel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        btnhome = new javax.swing.JPanel();
+        indi1 = new javax.swing.JPanel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        btnmovies = new javax.swing.JPanel();
+        indi2 = new javax.swing.JPanel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        btnseries = new javax.swing.JPanel();
+        indi3 = new javax.swing.JPanel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        mainframe = new javax.swing.JPanel();
+        home = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel71 = new javax.swing.JLabel();
+        jLabel72 = new javax.swing.JLabel();
+        jLabel73 = new javax.swing.JLabel();
+        jLabel74 = new javax.swing.JLabel();
+        jLabel75 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel76 = new javax.swing.JLabel();
+        jProgressBar1 = new javax.swing.JProgressBar();
+        jPanel15 = new javax.swing.JPanel();
+        labeldate = new javax.swing.JLabel();
+        datelabel = new javax.swing.JLabel();
+        jPanel16 = new javax.swing.JPanel();
+        labeltime = new javax.swing.JLabel();
+        timelabel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel67 = new javax.swing.JLabel();
+        button1 = new java.awt.Button();
+        homeminibg = new javax.swing.JPanel();
+        imagepanel = new javax.swing.JPanel();
+        img1 = new javax.swing.JLabel();
+        img2 = new javax.swing.JLabel();
+        img3 = new javax.swing.JLabel();
+        movies = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        moviesearchtxt = new javax.swing.JTextField();
+        moviesearchbtn1 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel77 = new javax.swing.JLabel();
+        jLabel78 = new javax.swing.JLabel();
+        jLabel79 = new javax.swing.JLabel();
+        jLabel80 = new javax.swing.JLabel();
+        jLabel81 = new javax.swing.JLabel();
+        jSeparator5 = new javax.swing.JSeparator();
+        jProgressBar2 = new javax.swing.JProgressBar();
+        jLabel82 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jPanel17 = new javax.swing.JPanel();
+        labeltime1 = new javax.swing.JLabel();
+        timelabel1 = new javax.swing.JLabel();
+        jPanel18 = new javax.swing.JPanel();
+        labeldate1 = new javax.swing.JLabel();
+        datelabel1 = new javax.swing.JLabel();
+        jLabel68 = new javax.swing.JLabel();
+        movienametxt = new javax.swing.JPanel();
+        jLabel22 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        moviestable = new javax.swing.JTable();
+        movienametxt2 = new javax.swing.JTextField();
+        jLabel45 = new javax.swing.JLabel();
+        jLabel46 = new javax.swing.JLabel();
+        moviewatched = new javax.swing.JRadioButton();
+        movienotwatched = new javax.swing.JRadioButton();
+        jSeparator3 = new javax.swing.JSeparator();
+        moviestatusreport = new javax.swing.JLabel();
+        resetmoviebtn = new javax.swing.JPanel();
+        jLabel41 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        addmoviebtn1 = new javax.swing.JPanel();
+        jLabel63 = new javax.swing.JLabel();
+        jLabel64 = new javax.swing.JLabel();
+        deletemovie = new javax.swing.JPanel();
+        jLabel101 = new javax.swing.JLabel();
+        jLabel102 = new javax.swing.JLabel();
+        moviesfilter = new javax.swing.JComboBox<>();
+        jLabel105 = new javax.swing.JLabel();
+        series = new javax.swing.JPanel();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel31 = new javax.swing.JLabel();
+        seriessearchbtn = new javax.swing.JLabel();
+        seriessearchtxt = new javax.swing.JTextField();
+        jPanel11 = new javax.swing.JPanel();
+        jPanel12 = new javax.swing.JPanel();
+        jLabel83 = new javax.swing.JLabel();
+        jLabel84 = new javax.swing.JLabel();
+        jLabel85 = new javax.swing.JLabel();
+        jLabel86 = new javax.swing.JLabel();
+        jLabel87 = new javax.swing.JLabel();
+        jSeparator6 = new javax.swing.JSeparator();
+        jProgressBar3 = new javax.swing.JProgressBar();
+        jLabel88 = new javax.swing.JLabel();
+        jPanel13 = new javax.swing.JPanel();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jPanel19 = new javax.swing.JPanel();
+        labeltime2 = new javax.swing.JLabel();
+        timelabel2 = new javax.swing.JLabel();
+        jPanel25 = new javax.swing.JPanel();
+        labeldate2 = new javax.swing.JLabel();
+        datelabel2 = new javax.swing.JLabel();
+        jLabel69 = new javax.swing.JLabel();
+        jPanel14 = new javax.swing.JPanel();
+        jLabel40 = new javax.swing.JLabel();
+        seriesstatusreport = new javax.swing.JLabel();
+        seriesnametxt = new javax.swing.JTextField();
+        jSeparator4 = new javax.swing.JSeparator();
+        jLabel47 = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
+        serieswatched = new javax.swing.JRadioButton();
+        seriesnotwatched = new javax.swing.JRadioButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        seriestable = new javax.swing.JTable();
+        addseriesbtn = new javax.swing.JPanel();
+        jLabel49 = new javax.swing.JLabel();
+        jLabel50 = new javax.swing.JLabel();
+        resetseriesbtn = new javax.swing.JPanel();
+        jLabel95 = new javax.swing.JLabel();
+        jLabel96 = new javax.swing.JLabel();
+        deleteseries = new javax.swing.JPanel();
+        jLabel99 = new javax.swing.JLabel();
+        jLabel100 = new javax.swing.JLabel();
+        seriesfilter = new javax.swing.JComboBox<>();
+        jLabel104 = new javax.swing.JLabel();
+        animations = new javax.swing.JPanel();
+        jPanel20 = new javax.swing.JPanel();
+        jLabel51 = new javax.swing.JLabel();
+        animationsearchtxt = new javax.swing.JTextField();
+        animationsearchbtn = new javax.swing.JLabel();
+        jPanel21 = new javax.swing.JPanel();
+        jPanel22 = new javax.swing.JPanel();
+        jLabel89 = new javax.swing.JLabel();
+        jLabel90 = new javax.swing.JLabel();
+        jLabel91 = new javax.swing.JLabel();
+        jLabel92 = new javax.swing.JLabel();
+        jLabel93 = new javax.swing.JLabel();
+        jSeparator7 = new javax.swing.JSeparator();
+        jProgressBar4 = new javax.swing.JProgressBar();
+        jLabel94 = new javax.swing.JLabel();
+        jPanel23 = new javax.swing.JPanel();
+        jLabel52 = new javax.swing.JLabel();
+        jLabel53 = new javax.swing.JLabel();
+        jLabel54 = new javax.swing.JLabel();
+        jLabel55 = new javax.swing.JLabel();
+        jLabel56 = new javax.swing.JLabel();
+        jLabel57 = new javax.swing.JLabel();
+        jLabel58 = new javax.swing.JLabel();
+        jLabel59 = new javax.swing.JLabel();
+        jPanel26 = new javax.swing.JPanel();
+        labeltime3 = new javax.swing.JLabel();
+        timelabel3 = new javax.swing.JLabel();
+        jPanel27 = new javax.swing.JPanel();
+        labeldate3 = new javax.swing.JLabel();
+        datelabel3 = new javax.swing.JLabel();
+        jLabel70 = new javax.swing.JLabel();
+        jPanel24 = new javax.swing.JPanel();
+        jLabel60 = new javax.swing.JLabel();
+        jLabel43 = new javax.swing.JLabel();
+        animationnametxt = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
+        animationwatched = new javax.swing.JRadioButton();
+        animationnotwatched = new javax.swing.JRadioButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        animationstable = new javax.swing.JTable();
+        animationstatusreport = new javax.swing.JLabel();
+        addanimationbtn = new javax.swing.JPanel();
+        jLabel61 = new javax.swing.JLabel();
+        jLabel62 = new javax.swing.JLabel();
+        deleteanimation = new javax.swing.JPanel();
+        jLabel65 = new javax.swing.JLabel();
+        jLabel66 = new javax.swing.JLabel();
+        resetanimationbtn1 = new javax.swing.JPanel();
+        jLabel97 = new javax.swing.JLabel();
+        jLabel98 = new javax.swing.JLabel();
+        jLabel103 = new javax.swing.JLabel();
+        jLabel44 = new javax.swing.JLabel();
+        animationsfilter = new javax.swing.JComboBox<>();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationByPlatform(true);
+        setUndecorated(true);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        sidemenu.setBackground(new java.awt.Color(27, 34, 55));
+        sidemenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnanimation.setBackground(new java.awt.Color(27, 34, 55));
+        btnanimation.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnanimation.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnanimationMousePressed(evt);
+            }
+        });
+        btnanimation.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        indi4.setOpaque(false);
+        indi4.setPreferredSize(new java.awt.Dimension(3, 100));
+
+        javax.swing.GroupLayout indi4Layout = new javax.swing.GroupLayout(indi4);
+        indi4.setLayout(indi4Layout);
+        indi4Layout.setHorizontalGroup(
+            indi4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 3, Short.MAX_VALUE)
+        );
+        indi4Layout.setVerticalGroup(
+            indi4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        btnanimation.add(indi4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jLabel23.setFont(new java.awt.Font("Segoe UI Light", 0, 12)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel23.setText("Animation");
+        btnanimation.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 60, 20));
+
+        jLabel29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Animation_20px.png"))); // NOI18N
+        btnanimation.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+
+        sidemenu.add(btnanimation, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 120, 40));
+
+        btnhome.setBackground(new java.awt.Color(41, 57, 80));
+        btnhome.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnhome.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnhomeMousePressed(evt);
+            }
+        });
+        btnhome.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        indi1.setPreferredSize(new java.awt.Dimension(3, 100));
+
+        javax.swing.GroupLayout indi1Layout = new javax.swing.GroupLayout(indi1);
+        indi1.setLayout(indi1Layout);
+        indi1Layout.setHorizontalGroup(
+            indi1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 3, Short.MAX_VALUE)
+        );
+        indi1Layout.setVerticalGroup(
+            indi1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        btnhome.add(indi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jLabel24.setFont(new java.awt.Font("Segoe UI Light", 0, 12)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setText("Home");
+        btnhome.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 60, 20));
+
+        jLabel27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Home_20px.png"))); // NOI18N
+        btnhome.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+
+        sidemenu.add(btnhome, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 120, 40));
+
+        btnmovies.setBackground(new java.awt.Color(27, 34, 55));
+        btnmovies.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnmovies.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnmoviesMousePressed(evt);
+            }
+        });
+        btnmovies.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        indi2.setOpaque(false);
+        indi2.setPreferredSize(new java.awt.Dimension(3, 100));
+
+        javax.swing.GroupLayout indi2Layout = new javax.swing.GroupLayout(indi2);
+        indi2.setLayout(indi2Layout);
+        indi2Layout.setHorizontalGroup(
+            indi2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 3, Short.MAX_VALUE)
+        );
+        indi2Layout.setVerticalGroup(
+            indi2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        btnmovies.add(indi2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jLabel25.setFont(new java.awt.Font("Segoe UI Light", 0, 12)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel25.setText("Movies");
+        btnmovies.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 60, 20));
+
+        jLabel30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Film_20px.png"))); // NOI18N
+        btnmovies.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+
+        sidemenu.add(btnmovies, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 120, 40));
+
+        btnseries.setBackground(new java.awt.Color(27, 34, 55));
+        btnseries.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnseries.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnseriesMousePressed(evt);
+            }
+        });
+        btnseries.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        indi3.setOpaque(false);
+        indi3.setPreferredSize(new java.awt.Dimension(3, 100));
+
+        javax.swing.GroupLayout indi3Layout = new javax.swing.GroupLayout(indi3);
+        indi3.setLayout(indi3Layout);
+        indi3Layout.setHorizontalGroup(
+            indi3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 3, Short.MAX_VALUE)
+        );
+        indi3Layout.setVerticalGroup(
+            indi3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        btnseries.add(indi3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jLabel26.setFont(new java.awt.Font("Segoe UI Light", 0, 12)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel26.setText("Series");
+        btnseries.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 60, 20));
+
+        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Clapperboard_20px.png"))); // NOI18N
+        btnseries.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 20, 20));
+
+        sidemenu.add(btnseries, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 120, 40));
+
+        getContentPane().add(sidemenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 440));
+
+        mainframe.setLayout(new java.awt.CardLayout());
+
+        home.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setBackground(new java.awt.Color(61, 119, 204));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("X");
+        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel3MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 738, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 23, Short.MAX_VALUE))
+        );
+
+        home.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 760, 50));
+
+        jPanel2.setBackground(new java.awt.Color(61, 119, 204));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel3.setBackground(new java.awt.Color(112, 167, 255));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/IMDb_48px.png"))); // NOI18N
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 32));
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Dexter_48px.png"))); // NOI18N
+        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 50, 30));
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/DVD Logo_48px.png"))); // NOI18N
+        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 50, 30));
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/CD Logo_48px_1.png"))); // NOI18N
+        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 50, 30));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Netflix_48px.png"))); // NOI18N
+        jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, 50, 30));
+
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Pixar_48px.png"))); // NOI18N
+        jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, 50, 30));
+
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Disney Movies _48px.png"))); // NOI18N
+        jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 50, 30));
+
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Twilight_48px.png"))); // NOI18N
+        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, -1, 32));
+
+        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 90));
+
+        jPanel4.setBackground(new java.awt.Color(76, 127, 216));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel71.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Instagram_24px.png"))); // NOI18N
+        jLabel71.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel71.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel71MousePressed(evt);
+            }
+        });
+        jPanel4.add(jLabel71, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 30, 20));
+
+        jLabel72.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Water_30px_1.png"))); // NOI18N
+        jPanel4.add(jLabel72, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 30, 30));
+
+        jLabel73.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Twitter_24px.png"))); // NOI18N
+        jLabel73.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel73.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel73MousePressed(evt);
+            }
+        });
+        jPanel4.add(jLabel73, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 30, 20));
+
+        jLabel74.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Gmail_24px.png"))); // NOI18N
+        jLabel74.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel74.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel74MousePressed(evt);
+            }
+        });
+        jPanel4.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 30, 20));
+
+        jLabel75.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/WhatsApp_24px.png"))); // NOI18N
+        jLabel75.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel75.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel75MousePressed(evt);
+            }
+        });
+        jPanel4.add(jLabel75, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, 30, 20));
+        jPanel4.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 170, -1));
+
+        jLabel76.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Facebook_24px_1.png"))); // NOI18N
+        jLabel76.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel76.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel76MousePressed(evt);
+            }
+        });
+        jPanel4.add(jLabel76, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 30, 20));
+
+        jProgressBar1.setBackground(new java.awt.Color(84, 127, 206));
+        jProgressBar1.setForeground(new java.awt.Color(123, 156, 255));
+        jProgressBar1.setBorderPainted(false);
+        jProgressBar1.setPreferredSize(new java.awt.Dimension(146, 10));
+        jProgressBar1.setRequestFocusEnabled(false);
+        jProgressBar1.setString("");
+        jProgressBar1.setStringPainted(true);
+        jPanel4.add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 150, 10));
+
+        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 220, 100));
+
+        jPanel15.setBackground(new java.awt.Color(76, 127, 216));
+
+        labeldate.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        labeldate.setForeground(new java.awt.Color(27, 34, 55));
+        labeldate.setText("Date:");
+
+        datelabel.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        datelabel.setForeground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+        jPanel15.setLayout(jPanel15Layout);
+        jPanel15Layout.setHorizontalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addComponent(labeldate)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(datelabel, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
+        );
+        jPanel15Layout.setVerticalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(labeldate, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(datelabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanel2.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 110, 30));
+
+        jPanel16.setBackground(new java.awt.Color(76, 127, 216));
+
+        labeltime.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        labeltime.setForeground(new java.awt.Color(27, 34, 55));
+        labeltime.setText("Time:");
+
+        timelabel.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        timelabel.setForeground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
+        jPanel16.setLayout(jPanel16Layout);
+        jPanel16Layout.setHorizontalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addComponent(labeltime)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(timelabel, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE))
+        );
+        jPanel16Layout.setVerticalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(labeltime, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(timelabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanel2.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, -1, -1));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(27, 34, 55));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Visit Movies Folder");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 180, 20));
+
+        jLabel67.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel67.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel67.setText("© 2018 Kariuki ENT, All Rights Reserved");
+        jPanel2.add(jLabel67, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 220, 20));
+
+        button1.setActionCommand("Go to folder");
+        button1.setBackground(new java.awt.Color(61, 119, 204));
+        button1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        button1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        button1.setForeground(new java.awt.Color(255, 255, 255));
+        button1.setLabel("Go to folder");
+        button1.setName("Go to folder"); // NOI18N
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 90, 30));
+        button1.getAccessibleContext().setAccessibleName("visitfolderbtn");
+
+        home.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 220, 390));
+
+        homeminibg.setBackground(new java.awt.Color(245, 247, 253));
+        homeminibg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        imagepanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        img1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img1.PNG"))); // NOI18N
+        imagepanel.add(img1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 390));
+
+        img2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img2.PNG"))); // NOI18N
+        imagepanel.add(img2, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 0, 540, 390));
+
+        img3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img3.PNG"))); // NOI18N
+        imagepanel.add(img3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 0, 540, 390));
+
+        homeminibg.add(imagepanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 390));
+
+        home.add(homeminibg, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, 540, 390));
+
+        mainframe.add(home, "card2");
+
+        movies.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel6.setBackground(new java.awt.Color(61, 119, 204));
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("X");
+        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel6MousePressed(evt);
+            }
+        });
+        jPanel6.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(738, 0, 22, 27));
+
+        moviesearchtxt.setBackground(new java.awt.Color(118, 157, 235));
+        moviesearchtxt.setForeground(new java.awt.Color(255, 255, 255));
+        moviesearchtxt.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        moviesearchtxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                moviesearchtxtActionPerformed(evt);
+            }
+        });
+        jPanel6.add(moviesearchtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, 160, 20));
+
+        moviesearchbtn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Search_20px.png"))); // NOI18N
+        moviesearchbtn1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        moviesearchbtn1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                moviesearchbtn1MousePressed(evt);
+            }
+        });
+        jPanel6.add(moviesearchbtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, 20, 20));
+
+        movies.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 760, 50));
+
+        jPanel7.setBackground(new java.awt.Color(61, 119, 204));
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel9.setBackground(new java.awt.Color(76, 127, 216));
+        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel77.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Facebook_24px_1.png"))); // NOI18N
+        jLabel77.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel77.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel77MousePressed(evt);
+            }
+        });
+        jPanel9.add(jLabel77, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 30, 20));
+
+        jLabel78.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Twitter_24px.png"))); // NOI18N
+        jLabel78.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel78.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel78MousePressed(evt);
+            }
+        });
+        jPanel9.add(jLabel78, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 30, 20));
+
+        jLabel79.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Gmail_24px.png"))); // NOI18N
+        jLabel79.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel79.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel79MousePressed(evt);
+            }
+        });
+        jPanel9.add(jLabel79, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 30, 20));
+
+        jLabel80.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Instagram_24px.png"))); // NOI18N
+        jLabel80.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel80.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel80MousePressed(evt);
+            }
+        });
+        jPanel9.add(jLabel80, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 30, 20));
+
+        jLabel81.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/WhatsApp_24px.png"))); // NOI18N
+        jLabel81.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel81.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel81MousePressed(evt);
+            }
+        });
+        jPanel9.add(jLabel81, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, 30, 20));
+        jPanel9.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 170, -1));
+
+        jProgressBar2.setBackground(new java.awt.Color(84, 127, 206));
+        jProgressBar2.setForeground(new java.awt.Color(123, 156, 255));
+        jProgressBar2.setBorderPainted(false);
+        jProgressBar2.setPreferredSize(new java.awt.Dimension(146, 10));
+        jProgressBar2.setRequestFocusEnabled(false);
+        jProgressBar2.setString("");
+        jProgressBar2.setStringPainted(true);
+        jPanel9.add(jProgressBar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 150, 10));
+
+        jLabel82.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Water_30px_1.png"))); // NOI18N
+        jPanel9.add(jLabel82, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 30, 30));
+
+        jPanel7.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 220, 100));
+
+        jPanel5.setBackground(new java.awt.Color(112, 167, 255));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/IMDb_48px.png"))); // NOI18N
+        jPanel5.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 32));
+
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Dexter_48px.png"))); // NOI18N
+        jPanel5.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 50, 30));
+
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/DVD Logo_48px.png"))); // NOI18N
+        jPanel5.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 50, 30));
+
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/CD Logo_48px_1.png"))); // NOI18N
+        jPanel5.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 50, 30));
+
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Netflix_48px.png"))); // NOI18N
+        jPanel5.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, 50, 30));
+
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Pixar_48px.png"))); // NOI18N
+        jPanel5.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, 50, 30));
+
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Disney Movies _48px.png"))); // NOI18N
+        jPanel5.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 50, 30));
+
+        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Twilight_48px.png"))); // NOI18N
+        jPanel5.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, -1, 32));
+
+        jPanel7.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 90));
+
+        jPanel17.setBackground(new java.awt.Color(76, 127, 216));
+
+        labeltime1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        labeltime1.setForeground(new java.awt.Color(27, 34, 55));
+        labeltime1.setText("Time:");
+
+        timelabel1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        timelabel1.setForeground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
+        jPanel17.setLayout(jPanel17Layout);
+        jPanel17Layout.setHorizontalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel17Layout.createSequentialGroup()
+                .addComponent(labeltime1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(timelabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE))
+        );
+        jPanel17Layout.setVerticalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(labeltime1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(timelabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanel7.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, -1, -1));
+
+        jPanel18.setBackground(new java.awt.Color(76, 127, 216));
+
+        labeldate1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        labeldate1.setForeground(new java.awt.Color(27, 34, 55));
+        labeldate1.setText("Date:");
+
+        datelabel1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        datelabel1.setForeground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
+        jPanel18.setLayout(jPanel18Layout);
+        jPanel18Layout.setHorizontalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel18Layout.createSequentialGroup()
+                .addComponent(labeldate1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(datelabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
+        );
+        jPanel18Layout.setVerticalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(labeldate1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(datelabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanel7.add(jPanel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 110, 30));
+
+        jLabel68.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel68.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel68.setText("© 2018 Kariuki ENT, All Rights Reserved");
+        jPanel7.add(jLabel68, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 220, 20));
+
+        movies.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 220, 390));
+
+        movienametxt.setBackground(new java.awt.Color(245, 247, 253));
+        movienametxt.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel22.setFont(new java.awt.Font("Segoe UI Light", 0, 45)); // NOI18N
+        jLabel22.setText(" My Movies ");
+        movienametxt.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 250, 60));
+
+        moviestable.setBackground(new java.awt.Color(118, 157, 235));
+        moviestable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        moviestable.setEnabled(false);
+        jScrollPane1.setViewportView(moviestable);
+
+        movienametxt.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 250, 540, 140));
+
+        movienametxt2.setBackground(new java.awt.Color(245, 247, 253));
+        movienametxt2.setBorder(null);
+        movienametxt.add(movienametxt2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 220, 20));
+
+        jLabel45.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel45.setForeground(new java.awt.Color(61, 119, 204));
+        jLabel45.setText("Name :");
+        movienametxt.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 50, 30));
+
+        jLabel46.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel46.setForeground(new java.awt.Color(61, 119, 204));
+        jLabel46.setText("Status :");
+        movienametxt.add(jLabel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 50, 30));
+
+        moviewatched.setBackground(new java.awt.Color(245, 247, 253));
+        buttonGroup1.add(moviewatched);
+        moviewatched.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        moviewatched.setText("Watched");
+        moviewatched.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                moviewatchedActionPerformed(evt);
+            }
+        });
+        movienametxt.add(moviewatched, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, -1));
+
+        movienotwatched.setBackground(new java.awt.Color(245, 247, 253));
+        buttonGroup1.add(movienotwatched);
+        movienotwatched.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        movienotwatched.setText("To be Watched");
+        movienotwatched.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                movienotwatchedActionPerformed(evt);
+            }
+        });
+        movienametxt.add(movienotwatched, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, -1, -1));
+
+        jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
+        movienametxt.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 220, 10));
+
+        moviestatusreport.setBackground(new java.awt.Color(245, 247, 253));
+        movienametxt.add(moviestatusreport, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, 210, 20));
+
+        resetmoviebtn.setBackground(new java.awt.Color(61, 119, 204));
+        resetmoviebtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 153), 3, true));
+        resetmoviebtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        resetmoviebtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                resetmoviebtnMousePressed(evt);
+            }
+        });
+        resetmoviebtn.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel41.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Refresh_20px.png"))); // NOI18N
+        resetmoviebtn.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 3, 26, 24));
+
+        jLabel42.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jLabel42.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel42.setText("RESET");
+        resetmoviebtn.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 70, 30));
+
+        movienametxt.add(resetmoviebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 130, 30));
+
+        addmoviebtn1.setBackground(new java.awt.Color(61, 119, 204));
+        addmoviebtn1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 153), 3, true));
+        addmoviebtn1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addmoviebtn1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                addmoviebtn1MousePressed(evt);
+            }
+        });
+        addmoviebtn1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel63.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/VLC_20px.png"))); // NOI18N
+        addmoviebtn1.add(jLabel63, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 3, 26, 24));
+
+        jLabel64.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jLabel64.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel64.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel64.setText("ADD MOVIE");
+        addmoviebtn1.add(jLabel64, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 70, 30));
+
+        movienametxt.add(addmoviebtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 130, 30));
+
+        deletemovie.setBackground(new java.awt.Color(61, 119, 204));
+        deletemovie.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 153), 3, true));
+        deletemovie.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deletemovie.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                deletemovieMousePressed(evt);
+            }
+        });
+        deletemovie.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel101.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Delete_20px.png"))); // NOI18N
+        deletemovie.add(jLabel101, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 3, 26, 24));
+
+        jLabel102.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jLabel102.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel102.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel102.setText("DELETE");
+        deletemovie.add(jLabel102, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 70, 30));
+
+        movienametxt.add(deletemovie, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, 130, 30));
+
+        moviesfilter.setBackground(new java.awt.Color(118, 157, 235));
+        moviesfilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Watched", "To Be Watched" }));
+        moviesfilter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        moviesfilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                moviesfilterActionPerformed(evt);
+            }
+        });
+        movienametxt.add(moviesfilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, 140, 30));
+
+        jLabel105.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel105.setForeground(new java.awt.Color(61, 119, 204));
+        jLabel105.setText("Filter By:");
+        movienametxt.add(jLabel105, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 50, 30));
+
+        movies.add(movienametxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, 540, 390));
+
+        mainframe.add(movies, "card2");
+
+        series.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel10.setBackground(new java.awt.Color(61, 119, 204));
+        jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel31.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel31.setText("X");
+        jLabel31.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel31.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel31MousePressed(evt);
+            }
+        });
+        jPanel10.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(738, 0, 22, 27));
+
+        seriessearchbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Search_20px.png"))); // NOI18N
+        seriessearchbtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        seriessearchbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                seriessearchbtnMousePressed(evt);
+            }
+        });
+        jPanel10.add(seriessearchbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, 20, 20));
+
+        seriessearchtxt.setBackground(new java.awt.Color(118, 157, 235));
+        seriessearchtxt.setForeground(new java.awt.Color(255, 255, 255));
+        seriessearchtxt.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        seriessearchtxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seriessearchtxtActionPerformed(evt);
+            }
+        });
+        jPanel10.add(seriessearchtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, 160, 20));
+
+        series.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 760, 50));
+
+        jPanel11.setBackground(new java.awt.Color(61, 119, 204));
+        jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel12.setBackground(new java.awt.Color(76, 127, 216));
+        jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel83.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Facebook_24px_1.png"))); // NOI18N
+        jLabel83.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel83.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel83MousePressed(evt);
+            }
+        });
+        jPanel12.add(jLabel83, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 30, 20));
+
+        jLabel84.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Twitter_24px.png"))); // NOI18N
+        jLabel84.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel84.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel84MousePressed(evt);
+            }
+        });
+        jPanel12.add(jLabel84, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 30, 20));
+
+        jLabel85.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Gmail_24px.png"))); // NOI18N
+        jLabel85.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel85.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel85MousePressed(evt);
+            }
+        });
+        jPanel12.add(jLabel85, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 30, 20));
+
+        jLabel86.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Instagram_24px.png"))); // NOI18N
+        jLabel86.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel86.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel86MousePressed(evt);
+            }
+        });
+        jPanel12.add(jLabel86, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 30, 20));
+
+        jLabel87.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/WhatsApp_24px.png"))); // NOI18N
+        jLabel87.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel87.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel87MousePressed(evt);
+            }
+        });
+        jPanel12.add(jLabel87, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, 30, 20));
+        jPanel12.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 170, -1));
+
+        jProgressBar3.setBackground(new java.awt.Color(84, 127, 206));
+        jProgressBar3.setForeground(new java.awt.Color(123, 156, 255));
+        jProgressBar3.setBorderPainted(false);
+        jProgressBar3.setPreferredSize(new java.awt.Dimension(146, 10));
+        jProgressBar3.setRequestFocusEnabled(false);
+        jProgressBar3.setString("");
+        jProgressBar3.setStringPainted(true);
+        jPanel12.add(jProgressBar3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 150, 10));
+
+        jLabel88.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Water_30px_1.png"))); // NOI18N
+        jPanel12.add(jLabel88, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 30, 30));
+
+        jPanel11.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 220, 100));
+
+        jPanel13.setBackground(new java.awt.Color(112, 167, 255));
+        jPanel13.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/IMDb_48px.png"))); // NOI18N
+        jPanel13.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 32));
+
+        jLabel33.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Dexter_48px.png"))); // NOI18N
+        jPanel13.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 50, 30));
+
+        jLabel34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/DVD Logo_48px.png"))); // NOI18N
+        jPanel13.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 50, 30));
+
+        jLabel35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/CD Logo_48px_1.png"))); // NOI18N
+        jPanel13.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 50, 30));
+
+        jLabel36.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Netflix_48px.png"))); // NOI18N
+        jPanel13.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, 50, 30));
+
+        jLabel37.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Pixar_48px.png"))); // NOI18N
+        jPanel13.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, 50, 30));
+
+        jLabel38.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Disney Movies _48px.png"))); // NOI18N
+        jPanel13.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 50, 30));
+
+        jLabel39.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Twilight_48px.png"))); // NOI18N
+        jPanel13.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, -1, 32));
+
+        jPanel11.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 90));
+
+        jPanel19.setBackground(new java.awt.Color(76, 127, 216));
+
+        labeltime2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        labeltime2.setForeground(new java.awt.Color(27, 34, 55));
+        labeltime2.setText("Time:");
+
+        timelabel2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        timelabel2.setForeground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
+        jPanel19.setLayout(jPanel19Layout);
+        jPanel19Layout.setHorizontalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel19Layout.createSequentialGroup()
+                .addComponent(labeltime2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(timelabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE))
+        );
+        jPanel19Layout.setVerticalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(labeltime2, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(timelabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanel11.add(jPanel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, -1, -1));
+
+        jPanel25.setBackground(new java.awt.Color(76, 127, 216));
+
+        labeldate2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        labeldate2.setForeground(new java.awt.Color(27, 34, 55));
+        labeldate2.setText("Date:");
+
+        datelabel2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        datelabel2.setForeground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel25Layout = new javax.swing.GroupLayout(jPanel25);
+        jPanel25.setLayout(jPanel25Layout);
+        jPanel25Layout.setHorizontalGroup(
+            jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel25Layout.createSequentialGroup()
+                .addComponent(labeldate2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(datelabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
+        );
+        jPanel25Layout.setVerticalGroup(
+            jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(labeldate2, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(datelabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanel11.add(jPanel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 110, 30));
+
+        jLabel69.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel69.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel69.setText("© 2018 Kariuki ENT, All Rights Reserved");
+        jPanel11.add(jLabel69, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 220, 20));
+
+        series.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 220, 390));
+
+        jPanel14.setBackground(new java.awt.Color(245, 247, 253));
+        jPanel14.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel40.setFont(new java.awt.Font("Segoe UI Light", 0, 45)); // NOI18N
+        jLabel40.setText(" My Series ");
+        jPanel14.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 250, 60));
+
+        seriesstatusreport.setBackground(new java.awt.Color(245, 247, 253));
+        jPanel14.add(seriesstatusreport, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, 210, 20));
+
+        seriesnametxt.setBackground(new java.awt.Color(245, 247, 253));
+        seriesnametxt.setBorder(null);
+        jPanel14.add(seriesnametxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 220, 20));
+
+        jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel14.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 220, 10));
+
+        jLabel47.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel47.setForeground(new java.awt.Color(61, 119, 204));
+        jLabel47.setText("Name :");
+        jPanel14.add(jLabel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 50, 30));
+
+        jLabel48.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel48.setForeground(new java.awt.Color(61, 119, 204));
+        jLabel48.setText("Status :");
+        jPanel14.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 50, 30));
+
+        serieswatched.setBackground(new java.awt.Color(245, 247, 253));
+        buttonGroup1.add(serieswatched);
+        serieswatched.setText("Watched");
+        serieswatched.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                serieswatchedActionPerformed(evt);
+            }
+        });
+        jPanel14.add(serieswatched, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, -1));
+
+        seriesnotwatched.setBackground(new java.awt.Color(245, 247, 253));
+        buttonGroup1.add(seriesnotwatched);
+        seriesnotwatched.setText("To be Watched");
+        seriesnotwatched.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seriesnotwatchedActionPerformed(evt);
+            }
+        });
+        jPanel14.add(seriesnotwatched, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, -1, -1));
+
+        seriestable.setBackground(new java.awt.Color(118, 157, 235));
+        seriestable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        seriestable.setEnabled(false);
+        jScrollPane3.setViewportView(seriestable);
+
+        jPanel14.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 250, 540, 140));
+
+        addseriesbtn.setBackground(new java.awt.Color(61, 119, 204));
+        addseriesbtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 153), 3, true));
+        addseriesbtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addseriesbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                addseriesbtnMousePressed(evt);
+            }
+        });
+        addseriesbtn.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel49.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/VLC_20px.png"))); // NOI18N
+        addseriesbtn.add(jLabel49, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 3, 26, 24));
+
+        jLabel50.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jLabel50.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel50.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel50.setText("ADD SERIES");
+        addseriesbtn.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 90, 30));
+
+        jPanel14.add(addseriesbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 130, 30));
+
+        resetseriesbtn.setBackground(new java.awt.Color(61, 119, 204));
+        resetseriesbtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 153), 3, true));
+        resetseriesbtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        resetseriesbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                resetseriesbtnMousePressed(evt);
+            }
+        });
+        resetseriesbtn.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel95.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Refresh_20px.png"))); // NOI18N
+        resetseriesbtn.add(jLabel95, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 3, 26, 24));
+
+        jLabel96.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jLabel96.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel96.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel96.setText("RESET");
+        resetseriesbtn.add(jLabel96, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 70, 30));
+
+        jPanel14.add(resetseriesbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 130, 30));
+
+        deleteseries.setBackground(new java.awt.Color(61, 119, 204));
+        deleteseries.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 153), 3, true));
+        deleteseries.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deleteseries.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                deleteseriesMousePressed(evt);
+            }
+        });
+        deleteseries.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel99.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Delete_20px.png"))); // NOI18N
+        deleteseries.add(jLabel99, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 3, 26, 24));
+
+        jLabel100.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jLabel100.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel100.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel100.setText("DELETE");
+        deleteseries.add(jLabel100, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 70, 30));
+
+        jPanel14.add(deleteseries, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, 130, 30));
+
+        seriesfilter.setBackground(new java.awt.Color(118, 157, 235));
+        seriesfilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Watched", "To Be Watched" }));
+        seriesfilter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        seriesfilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seriesfilterActionPerformed(evt);
+            }
+        });
+        jPanel14.add(seriesfilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, 140, 30));
+
+        jLabel104.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel104.setForeground(new java.awt.Color(61, 119, 204));
+        jLabel104.setText("Filter By:");
+        jPanel14.add(jLabel104, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 50, 30));
+
+        series.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, 540, 390));
+
+        mainframe.add(series, "card2");
+
+        animations.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel20.setBackground(new java.awt.Color(61, 119, 204));
+        jPanel20.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel51.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel51.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel51.setText("X");
+        jLabel51.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel51.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel51MousePressed(evt);
+            }
+        });
+        jPanel20.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(738, 0, 22, 27));
+
+        animationsearchtxt.setBackground(new java.awt.Color(118, 157, 235));
+        animationsearchtxt.setForeground(new java.awt.Color(255, 255, 255));
+        animationsearchtxt.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        animationsearchtxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                animationsearchtxtActionPerformed(evt);
+            }
+        });
+        jPanel20.add(animationsearchtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, 160, 20));
+
+        animationsearchbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Search_20px.png"))); // NOI18N
+        animationsearchbtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        animationsearchbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                animationsearchbtnMousePressed(evt);
+            }
+        });
+        jPanel20.add(animationsearchbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, 20, 20));
+
+        animations.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 760, 50));
+
+        jPanel21.setBackground(new java.awt.Color(61, 119, 204));
+        jPanel21.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel22.setBackground(new java.awt.Color(76, 127, 216));
+        jPanel22.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel89.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Facebook_24px_1.png"))); // NOI18N
+        jLabel89.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel89.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel89MousePressed(evt);
+            }
+        });
+        jPanel22.add(jLabel89, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 30, 20));
+
+        jLabel90.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Twitter_24px.png"))); // NOI18N
+        jLabel90.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel90.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel90MousePressed(evt);
+            }
+        });
+        jPanel22.add(jLabel90, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 30, 20));
+
+        jLabel91.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Gmail_24px.png"))); // NOI18N
+        jLabel91.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel91.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel91MousePressed(evt);
+            }
+        });
+        jPanel22.add(jLabel91, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 30, 20));
+
+        jLabel92.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Instagram_24px.png"))); // NOI18N
+        jLabel92.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel92.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel92MousePressed(evt);
+            }
+        });
+        jPanel22.add(jLabel92, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 30, 20));
+
+        jLabel93.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/WhatsApp_24px.png"))); // NOI18N
+        jLabel93.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel93.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel93MousePressed(evt);
+            }
+        });
+        jPanel22.add(jLabel93, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, 30, 20));
+        jPanel22.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 170, -1));
+
+        jProgressBar4.setBackground(new java.awt.Color(84, 127, 206));
+        jProgressBar4.setForeground(new java.awt.Color(123, 156, 255));
+        jProgressBar4.setBorderPainted(false);
+        jProgressBar4.setPreferredSize(new java.awt.Dimension(146, 10));
+        jProgressBar4.setRequestFocusEnabled(false);
+        jProgressBar4.setString("");
+        jProgressBar4.setStringPainted(true);
+        jPanel22.add(jProgressBar4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 150, 10));
+
+        jLabel94.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Water_30px_1.png"))); // NOI18N
+        jPanel22.add(jLabel94, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 30, 30));
+
+        jPanel21.add(jPanel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 220, 100));
+
+        jPanel23.setBackground(new java.awt.Color(112, 167, 255));
+        jPanel23.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel52.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/IMDb_48px.png"))); // NOI18N
+        jPanel23.add(jLabel52, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 32));
+
+        jLabel53.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Dexter_48px.png"))); // NOI18N
+        jPanel23.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 50, 30));
+
+        jLabel54.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/DVD Logo_48px.png"))); // NOI18N
+        jPanel23.add(jLabel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 50, 30));
+
+        jLabel55.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/CD Logo_48px_1.png"))); // NOI18N
+        jPanel23.add(jLabel55, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 50, 30));
+
+        jLabel56.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Netflix_48px.png"))); // NOI18N
+        jPanel23.add(jLabel56, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, 50, 30));
+
+        jLabel57.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Pixar_48px.png"))); // NOI18N
+        jPanel23.add(jLabel57, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, 50, 30));
+
+        jLabel58.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Disney Movies _48px.png"))); // NOI18N
+        jPanel23.add(jLabel58, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 50, 30));
+
+        jLabel59.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Twilight_48px.png"))); // NOI18N
+        jPanel23.add(jLabel59, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, -1, 32));
+
+        jPanel21.add(jPanel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 90));
+
+        jPanel26.setBackground(new java.awt.Color(76, 127, 216));
+
+        labeltime3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        labeltime3.setForeground(new java.awt.Color(27, 34, 55));
+        labeltime3.setText("Time:");
+
+        timelabel3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        timelabel3.setForeground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel26Layout = new javax.swing.GroupLayout(jPanel26);
+        jPanel26.setLayout(jPanel26Layout);
+        jPanel26Layout.setHorizontalGroup(
+            jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel26Layout.createSequentialGroup()
+                .addComponent(labeltime3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(timelabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE))
+        );
+        jPanel26Layout.setVerticalGroup(
+            jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(labeltime3, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(timelabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanel21.add(jPanel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, -1, -1));
+
+        jPanel27.setBackground(new java.awt.Color(76, 127, 216));
+
+        labeldate3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        labeldate3.setForeground(new java.awt.Color(27, 34, 55));
+        labeldate3.setText("Date:");
+
+        datelabel3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        datelabel3.setForeground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel27Layout = new javax.swing.GroupLayout(jPanel27);
+        jPanel27.setLayout(jPanel27Layout);
+        jPanel27Layout.setHorizontalGroup(
+            jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel27Layout.createSequentialGroup()
+                .addComponent(labeldate3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(datelabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
+        );
+        jPanel27Layout.setVerticalGroup(
+            jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(labeldate3, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(datelabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanel21.add(jPanel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 110, 30));
+
+        jLabel70.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel70.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel70.setText("© 2018 Kariuki ENT, All Rights Reserved");
+        jPanel21.add(jLabel70, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 220, 20));
+
+        animations.add(jPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 220, 390));
+
+        jPanel24.setBackground(new java.awt.Color(245, 247, 253));
+        jPanel24.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel60.setFont(new java.awt.Font("Segoe UI Light", 0, 45)); // NOI18N
+        jLabel60.setText(" My Animations ");
+        jPanel24.add(jLabel60, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 330, 60));
+
+        jLabel43.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel43.setForeground(new java.awt.Color(61, 119, 204));
+        jLabel43.setText("Name :");
+        jPanel24.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 50, 30));
+
+        animationnametxt.setBackground(new java.awt.Color(245, 247, 253));
+        animationnametxt.setBorder(null);
+        jPanel24.add(animationnametxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 220, 20));
+
+        jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel24.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 220, 10));
+
+        animationwatched.setBackground(new java.awt.Color(245, 247, 253));
+        buttonGroup1.add(animationwatched);
+        animationwatched.setText("Watched");
+        animationwatched.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                animationwatchedActionPerformed(evt);
+            }
+        });
+        jPanel24.add(animationwatched, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, -1));
+
+        animationnotwatched.setBackground(new java.awt.Color(245, 247, 253));
+        buttonGroup1.add(animationnotwatched);
+        animationnotwatched.setText("To be Watched");
+        animationnotwatched.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                animationnotwatchedActionPerformed(evt);
+            }
+        });
+        jPanel24.add(animationnotwatched, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, -1, -1));
+
+        animationstable.setBackground(new java.awt.Color(118, 157, 235));
+        animationstable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        animationstable.setEnabled(false);
+        jScrollPane2.setViewportView(animationstable);
+
+        jPanel24.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 250, 540, 140));
+
+        animationstatusreport.setBackground(new java.awt.Color(245, 247, 253));
+        jPanel24.add(animationstatusreport, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, 210, 20));
+
+        addanimationbtn.setBackground(new java.awt.Color(61, 119, 204));
+        addanimationbtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 153), 3, true));
+        addanimationbtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addanimationbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                addanimationbtnMousePressed(evt);
+            }
+        });
+        addanimationbtn.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel61.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/VLC_20px.png"))); // NOI18N
+        addanimationbtn.add(jLabel61, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 3, 26, 24));
+
+        jLabel62.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jLabel62.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel62.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel62.setText("ADD ANIMATION");
+        addanimationbtn.add(jLabel62, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 110, 30));
+
+        jPanel24.add(addanimationbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 150, 30));
+
+        deleteanimation.setBackground(new java.awt.Color(61, 119, 204));
+        deleteanimation.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 153), 3, true));
+        deleteanimation.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deleteanimation.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                deleteanimationMousePressed(evt);
+            }
+        });
+        deleteanimation.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel65.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Delete_20px.png"))); // NOI18N
+        deleteanimation.add(jLabel65, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 3, 26, 24));
+
+        jLabel66.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jLabel66.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel66.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel66.setText("DELETE");
+        deleteanimation.add(jLabel66, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 70, 30));
+
+        jPanel24.add(deleteanimation, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 170, 130, 30));
+
+        resetanimationbtn1.setBackground(new java.awt.Color(61, 119, 204));
+        resetanimationbtn1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 153), 3, true));
+        resetanimationbtn1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        resetanimationbtn1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                resetanimationbtn1MousePressed(evt);
+            }
+        });
+        resetanimationbtn1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel97.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Refresh_20px.png"))); // NOI18N
+        resetanimationbtn1.add(jLabel97, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 3, 26, 24));
+
+        jLabel98.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jLabel98.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel98.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel98.setText("RESET");
+        resetanimationbtn1.add(jLabel98, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 70, 30));
+
+        jPanel24.add(resetanimationbtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 170, 130, 30));
+
+        jLabel103.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel103.setForeground(new java.awt.Color(61, 119, 204));
+        jLabel103.setText("Status :");
+        jPanel24.add(jLabel103, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 50, 30));
+
+        jLabel44.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel44.setForeground(new java.awt.Color(61, 119, 204));
+        jLabel44.setText("Filter By:");
+        jPanel24.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 50, 30));
+
+        animationsfilter.setBackground(new java.awt.Color(118, 157, 235));
+        animationsfilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Watched", "To Be Watched" }));
+        animationsfilter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        animationsfilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                animationsfilterActionPerformed(evt);
+            }
+        });
+        jPanel24.add(animationsfilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, 140, 30));
+
+        animations.add(jPanel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, 540, 390));
+
+        mainframe.add(animations, "card2");
+
+        getContentPane().add(mainframe, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 760, 440));
+
+        setSize(new java.awt.Dimension(880, 438));
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
+        System.exit(0);        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel3MousePressed
+
+    private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
+        System.exit(0);
+    }//GEN-LAST:event_jLabel6MousePressed
+
+    private void btnhomeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnhomeMousePressed
+        setColor(btnhome);
+        indi1.setOpaque(true);
+        resetColor(new JPanel[]{btnmovies, btnseries, btnanimation}, new JPanel[]{indi2, indi3, indi4});
+        home.setVisible(true);
+        movies.setVisible(false);
+        series.setVisible(false);
+        animations.setVisible(false);
+    }//GEN-LAST:event_btnhomeMousePressed
+
+    private void btnmoviesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnmoviesMousePressed
+        setColor(btnmovies);
+        indi2.setOpaque(true);
+        resetColor(new JPanel[]{btnhome, btnseries, btnanimation}, new JPanel[]{indi1, indi3, indi4});
+        movies.setVisible(true);
+        home.setVisible(false);
+        series.setVisible(false);
+        animations.setVisible(false);
+        fetchmovie();
+    }//GEN-LAST:event_btnmoviesMousePressed
+
+    private void btnseriesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnseriesMousePressed
+        setColor(btnseries);
+        indi3.setOpaque(true);
+        resetColor(new JPanel[]{btnmovies, btnhome, btnanimation}, new JPanel[]{indi2, indi1, indi4});
+        movies.setVisible(false);
+        home.setVisible(false);
+        series.setVisible(true);
+        animations.setVisible(false);
+        fetchseries();
+
+    }//GEN-LAST:event_btnseriesMousePressed
+
+    private void btnanimationMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnanimationMousePressed
+        setColor(btnanimation);
+        indi4.setOpaque(true);
+        resetColor(new JPanel[]{btnmovies, btnseries, btnhome}, new JPanel[]{indi2, indi3, indi1});
+        movies.setVisible(false);
+        home.setVisible(false);
+        series.setVisible(false);
+        animations.setVisible(true);
+        fetchanimation();
+    }//GEN-LAST:event_btnanimationMousePressed
+
+    private void jLabel31MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel31MousePressed
+        System.exit(0);
+    }//GEN-LAST:event_jLabel31MousePressed
+
+    private void jLabel51MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel51MousePressed
+        System.exit(0);
+    }//GEN-LAST:event_jLabel51MousePressed
+
+    private void animationwatchedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_animationwatchedActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_animationwatchedActionPerformed
+
+    private void animationnotwatchedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_animationnotwatchedActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_animationnotwatchedActionPerformed
+
+    private void moviewatchedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moviewatchedActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_moviewatchedActionPerformed
+
+    private void movienotwatchedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_movienotwatchedActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_movienotwatchedActionPerformed
+
+    private void moviesearchtxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moviesearchtxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_moviesearchtxtActionPerformed
+
+    private void animationsearchtxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_animationsearchtxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_animationsearchtxtActionPerformed
+
+    private void serieswatchedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serieswatchedActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_serieswatchedActionPerformed
+
+    private void seriesnotwatchedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seriesnotwatchedActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_seriesnotwatchedActionPerformed
+
+    private void seriessearchtxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seriessearchtxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_seriessearchtxtActionPerformed
+
+    private void resetmoviebtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetmoviebtnMousePressed
+        movienametxt2.setText("");
+        buttonGroup1.clearSelection();
+        moviesearchtxt.setText("");
+        moviestatusreport.setText("");
+    }//GEN-LAST:event_resetmoviebtnMousePressed
+
+    private void deleteanimationMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteanimationMousePressed
+        if (animationnametxt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Input name of animation you are deleting");
+        } else {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/karisent?autoReconnect=true&useSSL=false", "root", "7819");
+                String sql = "delete from animation where animation_name = ?";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, (animationnametxt.getText()));
+                pstmt.executeUpdate();
+                JOptionPane.showMessageDialog(null, "You have removed " + animationnametxt.getText());
+                animationnametxt.setText("");
+                buttonGroup1.clearSelection();
+                animationsearchtxt.setText("");
+                animationstatusreport.setText("");
+                conn.close();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, evt);
+            }
+            fetchanimation();
+        }
+
+
+    }//GEN-LAST:event_deleteanimationMousePressed
+
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        try {
+            Desktop.getDesktop().open(new File("C:\\Users\\Kariuki\\Downloads\\Movies"));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "File not found");
+        }
+    }//GEN-LAST:event_button1ActionPerformed
+
+    private void jLabel76MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel76MousePressed
+        try {
+            Desktop.getDesktop().browse(new URI("https://www.facebook.com/joel.wachirah.3"));
+        } catch (IOException err) {
+            JOptionPane.showMessageDialog(null, "Error (0000086X64). Server error");
+        } catch (URISyntaxException err) {
+
+        }
+    }//GEN-LAST:event_jLabel76MousePressed
+
+    private void jLabel73MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel73MousePressed
+        try {
+            Desktop.getDesktop().browse(new URI("https://twitter.com/wachirakariukii"));
+        } catch (IOException err) {
+            JOptionPane.showMessageDialog(null, "Error (0000086X64). Server error");
+        } catch (URISyntaxException err) {
+
+        }
+    }//GEN-LAST:event_jLabel73MousePressed
+
+    private void jLabel74MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel74MousePressed
+        try {
+            Desktop.getDesktop().browse(new URI("https://mail.google.com/a/gmail.com/?view=cm&fs=1&to=joelwachirah@gmail.com"));
+        } catch (IOException err) {
+            JOptionPane.showMessageDialog(null, "Error (0000086X64). Server error");
+        } catch (URISyntaxException err) {
+
+        }
+    }//GEN-LAST:event_jLabel74MousePressed
+
+    private void jLabel71MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel71MousePressed
+        try {
+            Desktop.getDesktop().browse(new URI("https://www.instagram.com/wachira_kariuki/?hl=en"));
+        } catch (IOException err) {
+            JOptionPane.showMessageDialog(null, "Error (0000086X64). Server error");
+        } catch (URISyntaxException err) {
+
+        }
+    }//GEN-LAST:event_jLabel71MousePressed
+
+    private void jLabel75MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel75MousePressed
+        JOptionPane.showMessageDialog(null, "You do not have the appropriate application to perform this action. \n Reach User On : +254724 290 628 ");
+    }//GEN-LAST:event_jLabel75MousePressed
+
+    private void jLabel77MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel77MousePressed
+        try {
+            Desktop.getDesktop().browse(new URI("https://www.facebook.com/joel.wachirah.3"));
+        } catch (IOException err) {
+            JOptionPane.showMessageDialog(null, "Error (0000086X64). Server error");
+        } catch (URISyntaxException err) {
+
+        }
+    }//GEN-LAST:event_jLabel77MousePressed
+
+    private void jLabel78MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel78MousePressed
+        try {
+            Desktop.getDesktop().browse(new URI("https://twitter.com/wachirakariukii"));
+        } catch (IOException err) {
+            JOptionPane.showMessageDialog(null, "Error (0000086X64). Server error");
+        } catch (URISyntaxException err) {
+
+        }
+    }//GEN-LAST:event_jLabel78MousePressed
+
+    private void jLabel79MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel79MousePressed
+        try {
+            Desktop.getDesktop().browse(new URI("https://mail.google.com/a/gmail.com/?view=cm&fs=1&to=joelwachirah@gmail.com"));
+        } catch (IOException err) {
+            JOptionPane.showMessageDialog(null, "Error (0000086X64). Server error");
+        } catch (URISyntaxException err) {
+
+        }
+    }//GEN-LAST:event_jLabel79MousePressed
+
+    private void jLabel80MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel80MousePressed
+        try {
+            Desktop.getDesktop().browse(new URI("https://www.instagram.com/wachira_kariuki/?hl=en"));
+        } catch (IOException err) {
+            JOptionPane.showMessageDialog(null, "Error (0000086X64). Server error");
+        } catch (URISyntaxException err) {
+
+        }
+    }//GEN-LAST:event_jLabel80MousePressed
+
+    private void jLabel81MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel81MousePressed
+        JOptionPane.showMessageDialog(null, "You do not have the appropriate application to perform this action. \n Reach User On : +254724 290 628 ");
+    }//GEN-LAST:event_jLabel81MousePressed
+
+    private void jLabel83MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel83MousePressed
+        try {
+            Desktop.getDesktop().browse(new URI("https://www.facebook.com/joel.wachirah.3"));
+        } catch (IOException err) {
+            JOptionPane.showMessageDialog(null, "Error (0000086X64). Server error");
+        } catch (URISyntaxException err) {
+
+        }
+    }//GEN-LAST:event_jLabel83MousePressed
+
+    private void jLabel84MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel84MousePressed
+        try {
+            Desktop.getDesktop().browse(new URI("https://twitter.com/wachirakariukii"));
+        } catch (IOException err) {
+            JOptionPane.showMessageDialog(null, "Error (0000086X64). Server error");
+        } catch (URISyntaxException err) {
+
+        }
+    }//GEN-LAST:event_jLabel84MousePressed
+
+    private void jLabel85MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel85MousePressed
+        try {
+            Desktop.getDesktop().browse(new URI("https://mail.google.com/a/gmail.com/?view=cm&fs=1&to=joelwachirah@gmail.com"));
+        } catch (IOException err) {
+            JOptionPane.showMessageDialog(null, "Error (0000086X64). Server error");
+        } catch (URISyntaxException err) {
+
+        }
+    }//GEN-LAST:event_jLabel85MousePressed
+
+    private void jLabel86MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel86MousePressed
+        try {
+            Desktop.getDesktop().browse(new URI("https://www.instagram.com/wachira_kariuki/?hl=en"));
+        } catch (IOException err) {
+            JOptionPane.showMessageDialog(null, "Error (0000086X64). Server error");
+        } catch (URISyntaxException err) {
+
+        }
+    }//GEN-LAST:event_jLabel86MousePressed
+
+    private void jLabel87MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel87MousePressed
+        JOptionPane.showMessageDialog(null, "You do not have the appropriate application to perform this action. \n Reach User On : +254724 290 628 ");
+    }//GEN-LAST:event_jLabel87MousePressed
+
+    private void jLabel89MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel89MousePressed
+        try {
+            Desktop.getDesktop().browse(new URI("https://www.facebook.com/joel.wachirah.3"));
+        } catch (IOException err) {
+            JOptionPane.showMessageDialog(null, "Error (0000086X64). Server error");
+        } catch (URISyntaxException err) {
+
+        }
+    }//GEN-LAST:event_jLabel89MousePressed
+
+    private void jLabel90MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel90MousePressed
+        try {
+            Desktop.getDesktop().browse(new URI("https://twitter.com/wachirakariukii"));
+        } catch (IOException err) {
+            JOptionPane.showMessageDialog(null, "Error (0000086X64). Server error");
+        } catch (URISyntaxException err) {
+
+        }
+    }//GEN-LAST:event_jLabel90MousePressed
+
+    private void jLabel91MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel91MousePressed
+        try {
+            Desktop.getDesktop().browse(new URI("https://mail.google.com/a/gmail.com/?view=cm&fs=1&to=joelwachirah@gmail.com"));
+        } catch (IOException err) {
+            JOptionPane.showMessageDialog(null, "Error (0000086X64). Server error");
+        } catch (URISyntaxException err) {
+
+        }
+    }//GEN-LAST:event_jLabel91MousePressed
+
+    private void jLabel92MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel92MousePressed
+        try {
+            Desktop.getDesktop().browse(new URI("https://www.instagram.com/wachira_kariuki/?hl=en"));
+        } catch (IOException err) {
+            JOptionPane.showMessageDialog(null, "Error (0000086X64). Server error");
+        } catch (URISyntaxException err) {
+
+        }
+    }//GEN-LAST:event_jLabel92MousePressed
+
+    private void jLabel93MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel93MousePressed
+        JOptionPane.showMessageDialog(null, "You do not have the appropriate application to perform this action. \n Reach User On : +254724 290 628 ");
+    }//GEN-LAST:event_jLabel93MousePressed
+
+    private void addmoviebtn1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addmoviebtn1MousePressed
+        if (movienametxt2.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please input movie name");
+        } else {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/karisent?autoReconnect=true&useSSL=false", "root", "7819");
+                String sql = "insert into movies values(?, ?)";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, movienametxt2.getText());
+                if (moviewatched.isSelected()) {
+                    moviestatus = "Watched";
+                }
+                if (movienotwatched.isSelected()) {
+                    moviestatus = "To be watched";
+                }
+                pstmt.setString(2, moviestatus);
+                pstmt.executeUpdate();
+                JOptionPane.showMessageDialog(null, movienametxt2.getText() + " Successfully Added");
+                movienametxt2.setText("");
+                buttonGroup1.clearSelection();
+                conn.close();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, movienametxt2.getText() + " is already in the system");
+                movienametxt2.setText("");
+                buttonGroup1.clearSelection();
+            }
+            fetchmovie();
+        }
+
+    }//GEN-LAST:event_addmoviebtn1MousePressed
+    public void fetchmovie() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/karisent?autoReconnect=true&useSSL=false", "root", "7819");
+            String q = "select movie_name as 'Movie Name', status as 'Status' from movies";
+            PreparedStatement pstm = conn.prepareStatement(q);
+            ResultSet rs = null;
+            rs = pstm.executeQuery();
+
+            moviestable.setModel(DbUtils.resultSetToTableModel(rs));
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    public void fetchseries() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/karisent?autoReconnect=true&useSSL=false", "root", "7819");
+            String q = "select series_name as 'Series Name', status as 'Status' from series";
+            PreparedStatement pstm = conn.prepareStatement(q);
+            ResultSet rs = null;
+            rs = pstm.executeQuery();
+
+            seriestable.setModel(DbUtils.resultSetToTableModel(rs));
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    public void fetchanimation() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/karisent?autoReconnect=true&useSSL=false", "root", "7819");
+            String q = "select animation_name as 'Animation Name', status as 'Status' from animation";
+            PreparedStatement pstm = conn.prepareStatement(q);
+            ResultSet rs = null;
+            rs = pstm.executeQuery();
+
+            animationstable.setModel(DbUtils.resultSetToTableModel(rs));
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    private void addseriesbtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addseriesbtnMousePressed
+        if (seriesnametxt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please input series name");
+        } else {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/karisent?autoReconnect=true&useSSL=false", "root", "7819");
+                String sql = "insert into series values(?, ?)";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, seriesnametxt.getText());
+                if (serieswatched.isSelected()) {
+                    seriesstatus = "Watched";
+                }
+                if (seriesnotwatched.isSelected()) {
+                    seriesstatus = "To be watched";
+                }
+                pstmt.setString(2, seriesstatus);
+                pstmt.executeUpdate();
+                JOptionPane.showMessageDialog(null, seriesnametxt.getText() + " Successfully Added");
+                seriesnametxt.setText("");
+                buttonGroup1.clearSelection();
+                conn.close();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, seriesnametxt.getText() + " is already in the system");
+                seriesnametxt.setText("");
+                buttonGroup1.clearSelection();
+            }
+            fetchseries();
+        }
+    }//GEN-LAST:event_addseriesbtnMousePressed
+
+    private void addanimationbtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addanimationbtnMousePressed
+        if (animationnametxt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please input Animation name");
+        } else {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/karisent?autoReconnect=true&useSSL=false", "root", "7819");
+                String sql = "insert into animation values(?, ?)";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, animationnametxt.getText());
+                if (animationwatched.isSelected()) {
+                    animationstatus = "Watched";
+                }
+                if (animationnotwatched.isSelected()) {
+                    animationstatus = "To be watched";
+                }
+                pstmt.setString(2, animationstatus);
+                pstmt.executeUpdate();
+                JOptionPane.showMessageDialog(null, animationnametxt.getText() + " Successfully Added");
+                animationnametxt.setText("");
+                buttonGroup1.clearSelection();
+                conn.close();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, animationnametxt.getText() + " is already in the system");
+                animationnametxt.setText("");
+                buttonGroup1.clearSelection();
+            }
+            fetchanimation();
+        }
+    }//GEN-LAST:event_addanimationbtnMousePressed
+
+    private void resetseriesbtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetseriesbtnMousePressed
+        seriesnametxt.setText("");
+        buttonGroup1.clearSelection();
+        seriessearchtxt.setText("");
+        seriesstatusreport.setText("");
+    }//GEN-LAST:event_resetseriesbtnMousePressed
+
+    private void resetanimationbtn1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetanimationbtn1MousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_resetanimationbtn1MousePressed
+
+    private void deleteseriesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteseriesMousePressed
+        if (seriesnametxt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Input name of series you are deleting");
+        } else {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/karisent?autoReconnect=true&useSSL=false", "root", "7819");
+                String sql = "delete from series where series_name = ?";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, (seriesnametxt.getText()));
+                pstmt.executeUpdate();
+                JOptionPane.showMessageDialog(null, "You have removed " + seriesnametxt.getText());
+                seriesnametxt.setText("");
+                buttonGroup1.clearSelection();
+                seriessearchtxt.setText("");
+                seriesstatusreport.setText("");
+                conn.close();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, evt);
+            }
+            fetchseries();
+        }
+    }//GEN-LAST:event_deleteseriesMousePressed
+
+    private void deletemovieMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deletemovieMousePressed
+        if (movienametxt2.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Input name of movie you are deleting");
+        } else {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/karisent?autoReconnect=true&useSSL=false", "root", "7819");
+                String sql = "delete from movies where movie_name = ?";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, (movienametxt2.getText()));
+                pstmt.executeUpdate();
+                JOptionPane.showMessageDialog(null, "You have removed " + movienametxt2.getText());
+                movienametxt2.setText("");
+                buttonGroup1.clearSelection();
+                moviesearchtxt.setText("");
+                moviestatusreport.setText("");
+                conn.close();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, evt);
+            }
+            fetchmovie();
+        }
+    }//GEN-LAST:event_deletemovieMousePressed
+
+    private void moviesearchbtn1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_moviesearchbtn1MousePressed
+        if (moviesearchtxt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Input the movie name you are looking for");
+        } else {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/karisent?autoReconnect=true&useSSL=false", "root", "7819");
+                String sql = "select * from movies where movie_name = ?";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, (moviesearchtxt.getText()));
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    movienametxt2.setText(rs.getString("movie_name"));
+                    moviestatusreport.setText(rs.getString("status"));
+                } else {
+                    JOptionPane.showMessageDialog(null, "Movie not found");
+                    moviesearchtxt.setText("");
+                    movienametxt2.setText("");
+                    moviestatusreport.setText("");
+                }
+                conn.close();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, evt);
+            }
+        }
+    }//GEN-LAST:event_moviesearchbtn1MousePressed
+
+    private void seriessearchbtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_seriessearchbtnMousePressed
+        if (seriessearchtxt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Input the series name you are looking for");
+        } else {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/karisent?autoReconnect=true&useSSL=false", "root", "7819");
+                String sql = "select * from series where series_name = ?";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, (seriessearchtxt.getText()));
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    seriesnametxt.setText(rs.getString("series_name"));
+                    seriesstatusreport.setText(rs.getString("status"));
+                } else {
+                    JOptionPane.showMessageDialog(null, "Series not found");
+                    seriessearchtxt.setText("");
+                    seriesnametxt.setText("");
+                    seriesstatusreport.setText("");
+                }
+                conn.close();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, evt);
+            }
+        }
+    }//GEN-LAST:event_seriessearchbtnMousePressed
+
+    private void animationsearchbtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_animationsearchbtnMousePressed
+        if (animationsearchtxt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Input the animation name you are looking for");
+        } else {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/karisent?autoReconnect=true&useSSL=false", "root", "7819");
+                String sql = "select * from animation where animation_name = ?";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, (animationsearchtxt.getText()));
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    animationnametxt.setText(rs.getString("animation_name"));
+                    animationstatusreport.setText(rs.getString("status"));
+                } else {
+                    JOptionPane.showMessageDialog(null, "Animation not found");
+                    animationsearchtxt.setText("");
+                    animationnametxt.setText("");
+                    animationstatusreport.setText("");
+                }
+                conn.close();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }//GEN-LAST:event_animationsearchbtnMousePressed
+
+    private void animationsfilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_animationsfilterActionPerformed
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/karisent?autoReconnect=true&useSSL=false", "root", "7819");
+            String q = "select  animation_name as 'Animation Name', status as 'Status' "
+                    + "from animation "
+                    + "where status = '" + animationsfilter.getSelectedItem() + "'";
+            PreparedStatement pstm = conn.prepareStatement(q);
+            ResultSet rs = null;
+            rs = pstm.executeQuery();
+
+            animationstable.setModel(DbUtils.resultSetToTableModel(rs));
+            if (animationsfilter.getSelectedItem().equals("Select")) {
+                fetchanimation();
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_animationsfilterActionPerformed
+
+    private void seriesfilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seriesfilterActionPerformed
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/karisent?autoReconnect=true&useSSL=false", "root", "7819");
+            String q = "select  series_name as 'Series Name', status as 'Status' "
+                    + "from series "
+                    + "where status = '" + seriesfilter.getSelectedItem() + "'";
+            PreparedStatement pstm = conn.prepareStatement(q);
+            ResultSet rs = null;
+            rs = pstm.executeQuery();
+
+            seriestable.setModel(DbUtils.resultSetToTableModel(rs));
+            if (seriesfilter.getSelectedItem().equals("Select")) {
+                fetchseries();
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_seriesfilterActionPerformed
+
+    private void moviesfilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moviesfilterActionPerformed
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/karisent?autoReconnect=true&useSSL=false", "root", "7819");
+            String q = "select  movie_name as 'Movie Name', status as 'Status' "
+                    + "from movies "
+                    + "where status = '" + moviesfilter.getSelectedItem() + "'";
+            PreparedStatement pstm = conn.prepareStatement(q);
+            ResultSet rs = null;
+            rs = pstm.executeQuery();
+
+            moviestable.setModel(DbUtils.resultSetToTableModel(rs));
+            if (moviesfilter.getSelectedItem().equals("Select")) {
+                fetchmovie();
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_moviesfilterActionPerformed
+    private void setColor(JPanel panel) {
+        panel.setBackground(new Color(41, 57, 80));
+    }
+
+    private void resetColor(JPanel[] panel, JPanel[] indicators) {
+        for (int i = 0; i < panel.length; i++) {
+            panel[i].setBackground(new Color(27, 34, 55));
+        }
+        for (int i = 0; i < indicators.length; i++) {
+            indicators[i].setOpaque(false);
+        }
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(switchboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(switchboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(switchboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(switchboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new switchboard().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel addanimationbtn;
+    private javax.swing.JPanel addmoviebtn1;
+    private javax.swing.JPanel addseriesbtn;
+    private javax.swing.JTextField animationnametxt;
+    private javax.swing.JRadioButton animationnotwatched;
+    private javax.swing.JPanel animations;
+    private javax.swing.JLabel animationsearchbtn;
+    private javax.swing.JTextField animationsearchtxt;
+    private javax.swing.JComboBox<String> animationsfilter;
+    private javax.swing.JTable animationstable;
+    private javax.swing.JLabel animationstatusreport;
+    private javax.swing.JRadioButton animationwatched;
+    private javax.swing.JPanel btnanimation;
+    private javax.swing.JPanel btnhome;
+    private javax.swing.JPanel btnmovies;
+    private javax.swing.JPanel btnseries;
+    private java.awt.Button button1;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JLabel datelabel;
+    private javax.swing.JLabel datelabel1;
+    private javax.swing.JLabel datelabel2;
+    private javax.swing.JLabel datelabel3;
+    private javax.swing.JPanel deleteanimation;
+    private javax.swing.JPanel deletemovie;
+    private javax.swing.JPanel deleteseries;
+    private javax.swing.JPanel home;
+    private javax.swing.JPanel homeminibg;
+    private javax.swing.JPanel imagepanel;
+    private javax.swing.JLabel img1;
+    private javax.swing.JLabel img2;
+    private javax.swing.JLabel img3;
+    private javax.swing.JPanel indi1;
+    private javax.swing.JPanel indi2;
+    private javax.swing.JPanel indi3;
+    private javax.swing.JPanel indi4;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel100;
+    private javax.swing.JLabel jLabel101;
+    private javax.swing.JLabel jLabel102;
+    private javax.swing.JLabel jLabel103;
+    private javax.swing.JLabel jLabel104;
+    private javax.swing.JLabel jLabel105;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
+    private javax.swing.JLabel jLabel49;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel55;
+    private javax.swing.JLabel jLabel56;
+    private javax.swing.JLabel jLabel57;
+    private javax.swing.JLabel jLabel58;
+    private javax.swing.JLabel jLabel59;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel60;
+    private javax.swing.JLabel jLabel61;
+    private javax.swing.JLabel jLabel62;
+    private javax.swing.JLabel jLabel63;
+    private javax.swing.JLabel jLabel64;
+    private javax.swing.JLabel jLabel65;
+    private javax.swing.JLabel jLabel66;
+    private javax.swing.JLabel jLabel67;
+    private javax.swing.JLabel jLabel68;
+    private javax.swing.JLabel jLabel69;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel70;
+    private javax.swing.JLabel jLabel71;
+    private javax.swing.JLabel jLabel72;
+    private javax.swing.JLabel jLabel73;
+    private javax.swing.JLabel jLabel74;
+    private javax.swing.JLabel jLabel75;
+    private javax.swing.JLabel jLabel76;
+    private javax.swing.JLabel jLabel77;
+    private javax.swing.JLabel jLabel78;
+    private javax.swing.JLabel jLabel79;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel80;
+    private javax.swing.JLabel jLabel81;
+    private javax.swing.JLabel jLabel82;
+    private javax.swing.JLabel jLabel83;
+    private javax.swing.JLabel jLabel84;
+    private javax.swing.JLabel jLabel85;
+    private javax.swing.JLabel jLabel86;
+    private javax.swing.JLabel jLabel87;
+    private javax.swing.JLabel jLabel88;
+    private javax.swing.JLabel jLabel89;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabel90;
+    private javax.swing.JLabel jLabel91;
+    private javax.swing.JLabel jLabel92;
+    private javax.swing.JLabel jLabel93;
+    private javax.swing.JLabel jLabel94;
+    private javax.swing.JLabel jLabel95;
+    private javax.swing.JLabel jLabel96;
+    private javax.swing.JLabel jLabel97;
+    private javax.swing.JLabel jLabel98;
+    private javax.swing.JLabel jLabel99;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel23;
+    private javax.swing.JPanel jPanel24;
+    private javax.swing.JPanel jPanel25;
+    private javax.swing.JPanel jPanel26;
+    private javax.swing.JPanel jPanel27;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JProgressBar jProgressBar2;
+    private javax.swing.JProgressBar jProgressBar3;
+    private javax.swing.JProgressBar jProgressBar4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JLabel labeldate;
+    private javax.swing.JLabel labeldate1;
+    private javax.swing.JLabel labeldate2;
+    private javax.swing.JLabel labeldate3;
+    private javax.swing.JLabel labeltime;
+    private javax.swing.JLabel labeltime1;
+    private javax.swing.JLabel labeltime2;
+    private javax.swing.JLabel labeltime3;
+    private javax.swing.JPanel mainframe;
+    private javax.swing.JPanel movienametxt;
+    private javax.swing.JTextField movienametxt2;
+    private javax.swing.JRadioButton movienotwatched;
+    private javax.swing.JPanel movies;
+    private javax.swing.JLabel moviesearchbtn1;
+    private javax.swing.JTextField moviesearchtxt;
+    private javax.swing.JComboBox<String> moviesfilter;
+    private javax.swing.JTable moviestable;
+    private javax.swing.JLabel moviestatusreport;
+    private javax.swing.JRadioButton moviewatched;
+    private javax.swing.JPanel resetanimationbtn1;
+    private javax.swing.JPanel resetmoviebtn;
+    private javax.swing.JPanel resetseriesbtn;
+    private javax.swing.JPanel series;
+    private javax.swing.JComboBox<String> seriesfilter;
+    private javax.swing.JTextField seriesnametxt;
+    private javax.swing.JRadioButton seriesnotwatched;
+    private javax.swing.JLabel seriessearchbtn;
+    private javax.swing.JTextField seriessearchtxt;
+    private javax.swing.JLabel seriesstatusreport;
+    private javax.swing.JTable seriestable;
+    private javax.swing.JRadioButton serieswatched;
+    private javax.swing.JPanel sidemenu;
+    private javax.swing.JLabel timelabel;
+    private javax.swing.JLabel timelabel1;
+    private javax.swing.JLabel timelabel2;
+    private javax.swing.JLabel timelabel3;
+    // End of variables declaration//GEN-END:variables
+}
